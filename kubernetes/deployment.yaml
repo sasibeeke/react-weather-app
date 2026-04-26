@@ -20,6 +20,9 @@ spec:
         image: sasibk/weather-app:latest
         ports:
         - containerPort: 3000
+         env:
+        - name: REACT_APP_API_KEY
+          value: "de0ed5aadcmshb4eb1566860eecep1cc1ddjsne00fd7d03e20"
 
 
             
