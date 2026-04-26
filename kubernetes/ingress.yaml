@@ -4,6 +4,7 @@ metadata:
   name: weather-app-ingress
   namespace: weather-namespace
 spec:
+  ingressClassName: nginx
   rules:
   - host: weather.local
     http:
