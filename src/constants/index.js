@@ -1,5 +1,5 @@
 export const DEFAULT_PLACE = {
-  name: 'London S',
+  name: 'London Sasiram',
   place_id: 'london',
   adm_area1: 'England',
   adm_area2: 'Greater London',
