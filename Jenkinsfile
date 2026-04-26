@@ -2,6 +2,7 @@ pipeline{
     agent any 
     environment{
         DOCKER_IMAGE = "sasibk/weather-app"
+        GIT_TOKEN = credentials('github-token')
     }
 
     stages{
@@ -57,6 +58,7 @@ pipeline{
                 git config user.name "jenkins"
                 git add kubernetes/deployment.yaml
                 git commit -m "Update image to ${imageTag}"
+                git remote set-url origin https://sasibeeke:${GIT_TOKEN}@github.com/sasibeeke/react-weather-app.git
                 git push origin main
                 """
             }
