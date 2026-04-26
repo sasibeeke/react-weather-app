@@ -49,10 +49,17 @@ pipeline{
         stage('Deploy to EKS') {
             steps {
                 script {
-                    sh """
-                    kubectl apply -f kubernetes/
-                    """
-                }
+                def imageTag = "${DOCKER_IMAGE}:${BUILD_NUMBER}"
+    
+                sh """
+                sed -i 's|image: .*|image: ${imageTag}|' kubernetes/deployment.yaml
+                git config user.email "jenkins@local"
+                git config user.name "jenkins"
+                git add kubernetes/deployment.yaml
+                git commit -m "Update image to ${imageTag}"
+                git push origin main
+                """
+            }
             }
         }
 
