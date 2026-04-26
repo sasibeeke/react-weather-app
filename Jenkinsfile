@@ -52,15 +52,22 @@ pipeline{
                 script {
                 def imageTag = "${DOCKER_IMAGE}:${BUILD_NUMBER}"
     
+                 withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_TOKEN')]) {
+
                 sh """
                 sed -i 's|image: .*|image: ${imageTag}|' kubernetes/deployment.yaml
+
                 git config user.email "jenkins@local"
                 git config user.name "jenkins"
+
                 git add kubernetes/deployment.yaml
-                git commit -m "Update image to ${imageTag}"
-                git remote set-url origin https://sasibeeke:${GIT_TOKEN}@github.com/sasibeeke/react-weather-app.git
-                git push origin main
+                git commit -m "Update image to ${imageTag}" || true
+
+                git remote set-url origin https://github.com/sasibeeke/react-weather-app.git
+
+                git push https://${GIT_USER}:${GIT_TOKEN}@github.com/sasibeeke/react-weather-app.git HEAD:main
                 """
+            }
             }
             }
         }
