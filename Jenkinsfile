@@ -36,13 +36,23 @@ pipeline{
             }
         }
 
-        stage('Run Container (Test)') {
+        /*stage('Run Container (Test)') {
             steps {
                 sh '''
                 docker run -d -p 3000:3000 \
                 -e REACT_APP_API_KEY=de0ed5aadcmshb4eb1566860eecep1cc1ddjsne00fd7d03e20 \
                 ${DOCKER_IMAGE}:${BUILD_NUMBER}
                 '''
+            }
+        }*/
+
+        stage('Deploy to EKS') {
+            steps {
+                script {
+                    sh """
+                    kubectl apply -f kubernetes/
+                    """
+                }
             }
         }
 
