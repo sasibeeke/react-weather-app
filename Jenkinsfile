@@ -12,8 +12,10 @@ pipeline{
         }
         stage('Build the Code'){
             steps{
+                script {
                  def imageTag = "${DOCKER_IMAGE}:${BUILD_NUMBER}"
                  sh "docker build -f Dockerfile -t ${imageTag} ."
+            }
             }
         }
 
@@ -27,8 +29,10 @@ pipeline{
 
         stage('Push to Dockerhub'){
             steps{
+                script {
                 def imageTag = "${DOCKER_IMAGE}:${BUILD_NUMBER}"
                 sh "docker push ${imageTag}"
+            }
             }
         }
 
