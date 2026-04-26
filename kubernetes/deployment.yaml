@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: weather-app
-        image: sasibk/weather-app:28
+        image: sasibk/weather-app:29
         ports:
         - containerPort: 3000
         env:
