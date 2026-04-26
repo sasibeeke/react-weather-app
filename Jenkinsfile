@@ -12,7 +12,8 @@ pipeline{
         }
         stage('Build the Code'){
             steps{
-                 sh 'docker build -t $DOCKER_IMAGE .'   
+                 def imageTag = "${DOCKER_IMAGE}:${BUILD_NUMBER}"
+                 sh "docker build -f Dockerfile -t ${imageTag} ."
             }
         }
 
@@ -26,7 +27,8 @@ pipeline{
 
         stage('Push to Dockerhub'){
             steps{
-                sh "docker push $DOCKER_IMAGE"
+                def imageTag = "${DOCKER_IMAGE}:${BUILD_NUMBER}"
+                sh "docker push ${imageTag}"
             }
         }
 
